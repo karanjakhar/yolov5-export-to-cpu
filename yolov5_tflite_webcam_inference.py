@@ -65,8 +65,8 @@ def detect_video(weights,webcam,img_size,conf_thres,iou_thres):
 
             
             out.write(frame)
-            #uncomment below lines to see the output
-            #cv2.imshow('output',frame)    
+            
+            cv2.imshow('output',frame)    
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
             print('FPS:',no_of_frames/(time.time()-start_time))
