@@ -39,28 +39,29 @@ def detect_video(weights,video_filepath,img_size,conf_thres,iou_thres):
 
         normalized_image_array = image_array.astype(np.float32) / 255.0
         result_boxes, result_scores, result_class_names = yolov5_tflite_obj.detect(normalized_image_array)
-        result_boxes = scale_coords(size,np.array(result_boxes),(w,h))
-
-        font = cv2.FONT_HERSHEY_SIMPLEX 
         
-        # org 
-        org = (20, 40) 
+        if len(result_boxes) > 0:
+            result_boxes = scale_coords(size,np.array(result_boxes),(w,h))
+            font = cv2.FONT_HERSHEY_SIMPLEX 
             
-        # fontScale 
-        fontScale = 0.5
-            
-        # Blue color in BGR 
-        color = (0, 255, 0) 
-            
-        # Line thickness of 1 px 
-        thickness = 1
+            # org 
+            org = (20, 40) 
+                
+            # fontScale 
+            fontScale = 0.5
+                
+            # Blue color in BGR 
+            color = (0, 255, 0) 
+                
+            # Line thickness of 1 px 
+            thickness = 1
 
-        for i,r in enumerate(result_boxes):
+            for i,r in enumerate(result_boxes):
 
-            org = (int(r[0]),int(r[1]))
-            cv2.rectangle(frame, (int(r[0]),int(r[1])), (int(r[2]),int(r[3])), (255,0,0), 1)
-            cv2.putText(frame, str(int(100*result_scores[i])) + '%  ' + str(result_class_names[i]), org, font,  
-                        fontScale, color, thickness, cv2.LINE_AA)
+                org = (int(r[0]),int(r[1]))
+                cv2.rectangle(frame, (int(r[0]),int(r[1])), (int(r[2]),int(r[3])), (255,0,0), 1)
+                cv2.putText(frame, str(int(100*result_scores[i])) + '%  ' + str(result_class_names[i]), org, font,  
+                            fontScale, color, thickness, cv2.LINE_AA)
 
         
         out.write(frame)
