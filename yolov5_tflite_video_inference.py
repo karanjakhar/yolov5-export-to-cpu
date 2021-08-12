@@ -65,7 +65,9 @@ def detect_video(weights,video_filepath,img_size,conf_thres,iou_thres):
 
         
         out.write(frame)
-        print('FPS:',no_of_frames/(time.time()-start_time))
+        end_time = time.time()
+        print('FPS:',1/(end_time-start_time))
+        start_time = end_time
     out.release()
 
 
